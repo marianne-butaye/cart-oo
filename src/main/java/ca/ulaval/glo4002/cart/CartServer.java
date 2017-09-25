@@ -18,6 +18,7 @@ public class CartServer implements Runnable {
   private static final int PORT = 7222;
   private static StorageType storageType;
   private static LaunchType launchType;
+  private static boolean promoMode;
 
   public static void main(String[] args) {
     if (System.getProperty("store").equals("xml"))
@@ -29,6 +30,11 @@ public class CartServer implements Runnable {
       launchType = LaunchType.DEMO;
     else
       launchType = LaunchType.PRODUCTION;
+
+    if (System.getProperty("promo").equals("true"))
+      promoMode = true;
+    else
+      promoMode = false;
     new CartServer().run();
   }
 
@@ -58,7 +64,7 @@ public class CartServer implements Runnable {
   }
 
   private CartResource createCartResource() {
-    return new CartResource(storageType, launchType);
+    return new CartResource(storageType, launchType, promoMode);
   }
 
   private Object createClientResource() {

@@ -5,8 +5,8 @@ import java.util.List;
 import ca.ulaval.glo4002.cart.domain.cart.Cart;
 import ca.ulaval.glo4002.cart.domain.cart.CartItem;
 import ca.ulaval.glo4002.cart.domain.shop.ShopItem;
-import ca.ulaval.glo4002.cart.infrastructure.cart.CartRepositoryInMemory;
 import ca.ulaval.glo4002.cart.infrastructure.cart.CartRepository;
+import ca.ulaval.glo4002.cart.infrastructure.cart.CartRepositoryInMemory;
 import ca.ulaval.glo4002.cart.infrastructure.cart.CartRepositoryXML;
 
 public class CartApplicationService {
@@ -34,11 +34,11 @@ public class CartApplicationService {
     return cart;
   }
 
-  public void addItemToCart(String email, ShopItem item) {
+  public void addItemsToCart(String email, ShopItem item, int quantity) {
     List<Cart> carts = cartStorage.readCarts();
     Cart cart = getCartByOwner(email, carts);
 
-    cart.addItem(new CartItem(item.getName(), 1));
+    cart.addItem(new CartItem(item.getName(), quantity));
 
     cartStorage.persistCarts(carts);
   }

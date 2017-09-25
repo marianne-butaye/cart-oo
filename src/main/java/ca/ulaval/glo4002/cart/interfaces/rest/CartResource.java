@@ -27,11 +27,13 @@ public class CartResource {
   private CartApplicationService cartService;
   private ShopApplicationService shopService;
   private CartAssembler cartAssembler;
+  private boolean promoMode;
 
-  public CartResource(StorageType storageType, LaunchType launchType) {
+  public CartResource(StorageType storageType, LaunchType launchType, boolean promoMode) {
     this.cartService = new CartApplicationService(storageType);
     this.shopService = new ShopApplicationService(storageType, launchType);
     this.cartAssembler = new CartAssembler();
+    this.promoMode = promoMode;
   }
 
   @GET
@@ -45,7 +47,10 @@ public class CartResource {
       @PathParam(SKU_PARAMETER) String sku) {
     // TODO this resource does too much
     ShopItem shopItem = shopService.findItemBySku(sku);
-    cartService.addItemToCart(email, shopItem);
+    int quantity = 1;
+    if (promoMode)
+      quantity = 2;
+    cartService.addItemsToCart(email, shopItem, quantity);
     return Response.ok().build();
   }
 }
