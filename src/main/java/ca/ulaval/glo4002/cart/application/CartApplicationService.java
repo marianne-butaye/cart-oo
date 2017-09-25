@@ -9,7 +9,7 @@ import ca.ulaval.glo4002.cart.infrastructure.cart.CartRepository;
 import ca.ulaval.glo4002.cart.infrastructure.cart.CartRepositoryInMemory;
 import ca.ulaval.glo4002.cart.infrastructure.cart.CartRepositoryXML;
 
-public class CartApplicationService {
+public class CartApplicationService implements Service {
 
   private CartRepository cartStorage;
 
@@ -54,6 +54,16 @@ public class CartApplicationService {
       cartStorage.persistCarts(carts);
       return newCart;
     });
+  }
+
+  @Override
+  public String getName() {
+    return "CartApplicationService";
+  }
+
+  @Override
+  public void execute() {
+    System.out.println("Executing CartApplicationService");
   }
 
 }

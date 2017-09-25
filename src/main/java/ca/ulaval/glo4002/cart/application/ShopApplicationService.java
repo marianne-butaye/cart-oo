@@ -5,11 +5,12 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import ca.ulaval.glo4002.cart.domain.shop.ShopItem;
-import ca.ulaval.glo4002.cart.infrastructure.shop.ShopRepositoryInMemory;
 import ca.ulaval.glo4002.cart.infrastructure.shop.ShopRepository;
+import ca.ulaval.glo4002.cart.infrastructure.shop.ShopRepositoryInMemory;
 import ca.ulaval.glo4002.cart.infrastructure.shop.ShopRepositoryXML;
 
-public class ShopApplicationService {
+public class ShopApplicationService implements Service {
+
   private ShopRepository shopStorage;
   private LaunchType launchType;
 
@@ -57,5 +58,15 @@ public class ShopApplicationService {
     items.add(new ShopItem(sku, name, margin, available));
 
     shopStorage.persistShop(items);
+  }
+
+  @Override
+  public String getName() {
+    return "ShopApplicationService";
+  }
+
+  @Override
+  public void execute() {
+    System.out.println("Executing ShopApplicationService");
   }
 }

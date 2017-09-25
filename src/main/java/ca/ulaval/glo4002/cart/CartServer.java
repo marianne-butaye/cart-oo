@@ -8,7 +8,9 @@ import org.glassfish.jersey.servlet.ServletContainer;
 
 import ca.ulaval.glo4002.cart.application.ItemNotFoundException;
 import ca.ulaval.glo4002.cart.application.LaunchType;
+import ca.ulaval.glo4002.cart.application.Service;
 import ca.ulaval.glo4002.cart.application.StorageType;
+import ca.ulaval.glo4002.cart.application.serviceLocator.ServiceLocator;
 import ca.ulaval.glo4002.cart.interfaces.rest.CartResource;
 import ca.ulaval.glo4002.cart.interfaces.rest.PersistenceExceptionMapper;
 import ca.ulaval.glo4002.cart.interfaces.rest.ShopResource;
@@ -35,10 +37,16 @@ public class CartServer implements Runnable {
       promoMode = true;
     else
       promoMode = false;
+
     new CartServer().run();
   }
 
   public void run() {
+    Service service = ServiceLocator.getService("CartApplicationService", storageType, launchType);
+    service.execute();
+    service = ServiceLocator.getService("ShopApplicationService", storageType, launchType);
+    service.execute();
+
     Server server = new Server(PORT);
     ServletContextHandler contextHandler = new ServletContextHandler(server, "/");
 
