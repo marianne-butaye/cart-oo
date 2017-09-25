@@ -11,8 +11,10 @@ import ca.ulaval.glo4002.cart.infrastructure.shop.ShopXML;
 
 public class ShopApplicationService {
   private ShopStorage shopStorage;
+  private LaunchType launchType;
 
-  public ShopApplicationService(StorageType storageType) {
+  public ShopApplicationService(StorageType storageType, LaunchType launchType) {
+    this.launchType = launchType;
     switch (storageType) {
     case XML:
       shopStorage = new ShopXML();
@@ -27,7 +29,7 @@ public class ShopApplicationService {
 
   public List<ShopItem> listAvailableItems() {
     List<ShopItem> items = shopStorage.readShop();
-    if (items.isEmpty()) {
+    if (items.isEmpty() && launchType.equals(LaunchType.DEMO)) {
       Logger.getGlobal().info("Prefilling data in the shop for the demo");
       prefillDemoData();
       items = shopStorage.readShop();

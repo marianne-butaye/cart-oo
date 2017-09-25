@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import ca.ulaval.glo4002.cart.application.CartApplicationService;
+import ca.ulaval.glo4002.cart.application.LaunchType;
 import ca.ulaval.glo4002.cart.application.ShopApplicationService;
 import ca.ulaval.glo4002.cart.application.StorageType;
 import ca.ulaval.glo4002.cart.domain.cart.Cart;
@@ -25,9 +26,9 @@ public class CartResource {
   private CartApplicationService cartService;
   private ShopApplicationService shopService;
 
-  public CartResource(StorageType storageType) {
+  public CartResource(StorageType storageType, LaunchType launchType) {
     this.cartService = new CartApplicationService(storageType);
-    this.shopService = new ShopApplicationService(storageType);
+    this.shopService = new ShopApplicationService(storageType, launchType);
   }
 
   @GET

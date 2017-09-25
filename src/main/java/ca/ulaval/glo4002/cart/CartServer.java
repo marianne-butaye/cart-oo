@@ -7,6 +7,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
 import ca.ulaval.glo4002.cart.application.ItemNotFoundException;
+import ca.ulaval.glo4002.cart.application.LaunchType;
 import ca.ulaval.glo4002.cart.application.StorageType;
 import ca.ulaval.glo4002.cart.interfaces.rest.CartResource;
 import ca.ulaval.glo4002.cart.interfaces.rest.PersistenceExceptionMapper;
@@ -16,12 +17,18 @@ import ca.ulaval.glo4002.cart.interfaces.rest.filters.CORSFilter;
 public class CartServer implements Runnable {
   private static final int PORT = 7222;
   private static StorageType storageType;
+  private static LaunchType launchType;
 
   public static void main(String[] args) {
     if (System.getProperty("store").equals("xml"))
       storageType = StorageType.XML;
     else
       storageType = StorageType.MEMORY;
+
+    if (System.getProperty("mode").equals("demo"))
+      launchType = LaunchType.DEMO;
+    else
+      launchType = LaunchType.PRODUCTION;
     new CartServer().run();
   }
 
@@ -51,10 +58,10 @@ public class CartServer implements Runnable {
   }
 
   private CartResource createCartResource() {
-    return new CartResource(storageType);
+    return new CartResource(storageType, launchType);
   }
 
   private Object createClientResource() {
-    return new ShopResource(storageType);
+    return new ShopResource(storageType, launchType);
   }
 }
