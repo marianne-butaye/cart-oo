@@ -5,22 +5,22 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import ca.ulaval.glo4002.cart.domain.shop.ShopItem;
-import ca.ulaval.glo4002.cart.infrastructure.shop.ShopInMemory;
-import ca.ulaval.glo4002.cart.infrastructure.shop.ShopStorage;
-import ca.ulaval.glo4002.cart.infrastructure.shop.ShopXML;
+import ca.ulaval.glo4002.cart.infrastructure.shop.ShopRepositoryInMemory;
+import ca.ulaval.glo4002.cart.infrastructure.shop.ShopRepository;
+import ca.ulaval.glo4002.cart.infrastructure.shop.ShopRepositoryXML;
 
 public class ShopApplicationService {
-  private ShopStorage shopStorage;
+  private ShopRepository shopStorage;
   private LaunchType launchType;
 
   public ShopApplicationService(StorageType storageType, LaunchType launchType) {
     this.launchType = launchType;
     switch (storageType) {
     case XML:
-      shopStorage = new ShopXML();
+      shopStorage = new ShopRepositoryXML();
       break;
     case MEMORY:
-      shopStorage = new ShopInMemory();
+      shopStorage = new ShopRepositoryInMemory();
       break;
     default:
       break;

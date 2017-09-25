@@ -1,50 +1,41 @@
 package ca.ulaval.glo4002.cart.domain.shop;
 
-import javax.xml.bind.annotation.XmlElement;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-
 public class ShopItem {
 
-	@XmlElement
-	@JsonProperty
-	private String itemSku;
+  private String itemSku;
+  private String name;
+  private boolean available;
+  private double profitMarginPercentage;
 
-	@XmlElement
-	@JsonProperty
-	private String name;
+  private ShopItem() {
+    // JAXB
+  }
 
-	@XmlElement
-	@JsonProperty
-	private boolean available;
-	
-	@XmlElement
-	@JsonProperty
-	// Ne pas enlever @JsonProperty, ceci sert pour le panneau d'admin où on saisit les items
-	private double profitMarginPercentage;
+  public ShopItem(String itemSku, String name, double profitMarginPercentage, boolean available) {
+    this.itemSku = itemSku;
+    this.name = name;
+    this.profitMarginPercentage = profitMarginPercentage;
+    this.available = available;
+  }
 
-	private ShopItem() {
-		// JAXB
-	}
+  public String getName() {
+    return name;
+  }
 
-	public ShopItem(String itemSku, String name, double profitMarginPercentage, boolean available) {
-		this.itemSku = itemSku;
-		this.name = name;
-		this.profitMarginPercentage = profitMarginPercentage;
-		this.available = available;
-	}
+  public boolean isAvailable() {
+    return available;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public boolean hasSku(String sku) {
+    return this.itemSku.equals(sku);
+  }
 
-	public boolean isAvailable() {
-		return available;
-	}
+  public String getItemSku() {
+    return itemSku;
+  }
 
-	public boolean hasSku(String sku) {
-		return this.itemSku.equals(sku);
-	}
+  public double getProfitMarginPercentage() {
+    return profitMarginPercentage;
+  }
 
 }

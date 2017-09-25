@@ -7,21 +7,24 @@ import javax.ws.rs.Path;
 
 import ca.ulaval.glo4002.cart.application.LaunchType;
 import ca.ulaval.glo4002.cart.application.ShopApplicationService;
+import ca.ulaval.glo4002.cart.application.ShopAssembler;
 import ca.ulaval.glo4002.cart.application.StorageType;
-import ca.ulaval.glo4002.cart.domain.shop.ShopItem;
+import ca.ulaval.glo4002.cart.dto.ShopItemDto;
 
 @Path("/shop")
 public class ShopResource {
 
   private ShopApplicationService shopService;
+  private ShopAssembler shopAssembler;
 
   public ShopResource(StorageType storageType, LaunchType launchType) {
     this.shopService = new ShopApplicationService(storageType, launchType);
+    this.shopAssembler = new ShopAssembler();
   }
 
   @GET
   @Path("/available-items")
-  public List<ShopItem> listItems() {
-    return shopService.listAvailableItems();
+  public List<ShopItemDto> listItems() {
+    return shopAssembler.toDto(shopService.listAvailableItems());
   }
 }

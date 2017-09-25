@@ -4,7 +4,7 @@ import java.util.List;
 
 import ca.ulaval.glo4002.cart.domain.shop.ShopItem;
 
-public interface ShopStorage {
+public interface ShopRepository {
 
   public List<ShopItem> readShop();
 

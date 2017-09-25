@@ -5,21 +5,21 @@ import java.util.List;
 import ca.ulaval.glo4002.cart.domain.cart.Cart;
 import ca.ulaval.glo4002.cart.domain.cart.CartItem;
 import ca.ulaval.glo4002.cart.domain.shop.ShopItem;
-import ca.ulaval.glo4002.cart.infrastructure.cart.CartInMemory;
-import ca.ulaval.glo4002.cart.infrastructure.cart.CartStorage;
-import ca.ulaval.glo4002.cart.infrastructure.cart.CartXML;
+import ca.ulaval.glo4002.cart.infrastructure.cart.CartRepositoryInMemory;
+import ca.ulaval.glo4002.cart.infrastructure.cart.CartRepository;
+import ca.ulaval.glo4002.cart.infrastructure.cart.CartRepositoryXML;
 
 public class CartApplicationService {
 
-  private CartStorage cartStorage;
+  private CartRepository cartStorage;
 
   public CartApplicationService(StorageType storageType) {
     switch (storageType) {
     case XML:
-      cartStorage = new CartXML();
+      cartStorage = new CartRepositoryXML();
       break;
     case MEMORY:
-      cartStorage = new CartInMemory();
+      cartStorage = new CartRepositoryInMemory();
       break;
     default:
       break;

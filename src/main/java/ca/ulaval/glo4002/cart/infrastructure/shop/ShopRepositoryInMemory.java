@@ -5,7 +5,7 @@ import java.util.List;
 
 import ca.ulaval.glo4002.cart.domain.shop.ShopItem;
 
-public class ShopInMemory implements ShopStorage {
+public class ShopRepositoryInMemory implements ShopRepository {
 
   private List<ShopItem> items = new ArrayList<>();
 

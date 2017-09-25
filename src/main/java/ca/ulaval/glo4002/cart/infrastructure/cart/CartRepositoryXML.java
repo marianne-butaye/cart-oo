@@ -13,7 +13,7 @@ import ca.ulaval.glo4002.cart.application.PersistenceException;
 import ca.ulaval.glo4002.cart.application.XmlUtils;
 import ca.ulaval.glo4002.cart.domain.cart.Cart;
 
-public class CartXML implements CartStorage {
+public class CartRepositoryXML implements CartRepository {
   private static final String CART_STORAGE = "cart-storage";
   private static File storageFile;
 

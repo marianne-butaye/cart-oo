@@ -10,11 +10,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import ca.ulaval.glo4002.cart.application.CartApplicationService;
+import ca.ulaval.glo4002.cart.application.CartAssembler;
 import ca.ulaval.glo4002.cart.application.LaunchType;
 import ca.ulaval.glo4002.cart.application.ShopApplicationService;
 import ca.ulaval.glo4002.cart.application.StorageType;
-import ca.ulaval.glo4002.cart.domain.cart.Cart;
 import ca.ulaval.glo4002.cart.domain.shop.ShopItem;
+import ca.ulaval.glo4002.cart.dto.CartDto;
 
 @Path("/clients/{" + CartResource.EMAIL_PARAMETER + "}/cart")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -25,15 +26,17 @@ public class CartResource {
 
   private CartApplicationService cartService;
   private ShopApplicationService shopService;
+  private CartAssembler cartAssembler;
 
   public CartResource(StorageType storageType, LaunchType launchType) {
     this.cartService = new CartApplicationService(storageType);
     this.shopService = new ShopApplicationService(storageType, launchType);
+    this.cartAssembler = new CartAssembler();
   }
 
   @GET
-  public Cart getCart(@PathParam(EMAIL_PARAMETER) String email) {
-    return cartService.findOrCreateCartForClient(email);
+  public CartDto getCart(@PathParam(EMAIL_PARAMETER) String email) {
+    return cartAssembler.toDto(cartService.findOrCreateCartForClient(email));
   }
 
   @PUT

@@ -13,7 +13,7 @@ import ca.ulaval.glo4002.cart.application.Shop;
 import ca.ulaval.glo4002.cart.application.XmlUtils;
 import ca.ulaval.glo4002.cart.domain.shop.ShopItem;
 
-public class ShopXML implements ShopStorage {
+public class ShopRepositoryXML implements ShopRepository {
   private static final String SHOP_STORAGE = "shop";
   private static File storageFile;
 

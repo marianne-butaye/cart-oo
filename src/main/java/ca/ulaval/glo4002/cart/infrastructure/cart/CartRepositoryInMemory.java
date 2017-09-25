@@ -5,7 +5,7 @@ import java.util.List;
 
 import ca.ulaval.glo4002.cart.domain.cart.Cart;
 
-public class CartInMemory implements CartStorage {
+public class CartRepositoryInMemory implements CartRepository {
 
   private List<Cart> carts = new ArrayList<>();
 
