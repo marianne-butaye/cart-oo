@@ -4,15 +4,18 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import com.google.inject.Inject;
+
 import ca.ulaval.glo4002.cart.domain.shop.ShopItem;
-import ca.ulaval.glo4002.cart.infrastructure.shop.ShopRepositoryInMemory;
 import ca.ulaval.glo4002.cart.infrastructure.shop.ShopRepository;
+import ca.ulaval.glo4002.cart.infrastructure.shop.ShopRepositoryInMemory;
 import ca.ulaval.glo4002.cart.infrastructure.shop.ShopRepositoryXML;
 
 public class ShopApplicationService {
   private ShopRepository shopStorage;
   private LaunchType launchType;
 
+  @Inject
   public ShopApplicationService(StorageType storageType, LaunchType launchType) {
     this.launchType = launchType;
     switch (storageType) {

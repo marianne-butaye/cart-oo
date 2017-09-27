@@ -9,11 +9,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.google.inject.Inject;
+
 import ca.ulaval.glo4002.cart.application.CartApplicationService;
 import ca.ulaval.glo4002.cart.application.CartAssembler;
-import ca.ulaval.glo4002.cart.application.LaunchType;
 import ca.ulaval.glo4002.cart.application.ShopApplicationService;
-import ca.ulaval.glo4002.cart.application.StorageType;
 import ca.ulaval.glo4002.cart.domain.shop.ShopItem;
 import ca.ulaval.glo4002.cart.dto.CartDto;
 
@@ -29,10 +29,12 @@ public class CartResource {
   private CartAssembler cartAssembler;
   private boolean promoMode;
 
-  public CartResource(StorageType storageType, LaunchType launchType, boolean promoMode) {
-    this.cartService = new CartApplicationService(storageType);
-    this.shopService = new ShopApplicationService(storageType, launchType);
-    this.cartAssembler = new CartAssembler();
+  @Inject
+  public CartResource(CartApplicationService cartService, ShopApplicationService shopService,
+      CartAssembler cartAssembler, boolean promoMode) {
+    this.cartService = cartService;
+    this.shopService = shopService;
+    this.cartAssembler = cartAssembler;
     this.promoMode = promoMode;
   }
 

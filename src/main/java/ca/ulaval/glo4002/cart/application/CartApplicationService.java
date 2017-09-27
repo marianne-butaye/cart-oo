@@ -2,6 +2,8 @@ package ca.ulaval.glo4002.cart.application;
 
 import java.util.List;
 
+import com.google.inject.Inject;
+
 import ca.ulaval.glo4002.cart.domain.cart.Cart;
 import ca.ulaval.glo4002.cart.domain.cart.CartItem;
 import ca.ulaval.glo4002.cart.domain.shop.ShopItem;
@@ -13,6 +15,7 @@ public class CartApplicationService {
 
   private CartRepository cartStorage;
 
+  @Inject
   public CartApplicationService(StorageType storageType) {
     switch (storageType) {
     case XML:

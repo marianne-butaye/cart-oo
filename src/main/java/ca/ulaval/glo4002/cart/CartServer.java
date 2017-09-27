@@ -6,6 +6,9 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
 import ca.ulaval.glo4002.cart.application.ItemNotFoundException;
 import ca.ulaval.glo4002.cart.application.LaunchType;
 import ca.ulaval.glo4002.cart.application.StorageType;
@@ -13,6 +16,8 @@ import ca.ulaval.glo4002.cart.interfaces.rest.CartResource;
 import ca.ulaval.glo4002.cart.interfaces.rest.PersistenceExceptionMapper;
 import ca.ulaval.glo4002.cart.interfaces.rest.ShopResource;
 import ca.ulaval.glo4002.cart.interfaces.rest.filters.CORSFilter;
+import ca.ulaval.glo4002.cart.modules.CartModule;
+import ca.ulaval.glo4002.cart.modules.ShopModule;
 
 public class CartServer implements Runnable {
   private static final int PORT = 7222;
@@ -64,10 +69,15 @@ public class CartServer implements Runnable {
   }
 
   private CartResource createCartResource() {
-    return new CartResource(storageType, launchType, promoMode);
+    Injector cartInjector = Guice
+        .createInjector(new CartModule(storageType, launchType, promoMode));
+    CartResource cartResource = cartInjector.getInstance(CartResource.class);
+    return cartResource;
   }
 
   private Object createClientResource() {
-    return new ShopResource(storageType, launchType);
+    Injector shopInjector = Guice.createInjector(new ShopModule(storageType, launchType));
+    ShopResource shopResource = shopInjector.getInstance(ShopResource.class);
+    return shopResource;
   }
 }
